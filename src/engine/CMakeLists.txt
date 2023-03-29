@@ -1,0 +1,84 @@
+target_sources(core
+    PRIVATE
+        at_bfs.hxx
+        at_bfs_dq.hxx
+        at_bfs_dq_mh.hxx
+        at_gbfs.hxx
+        at_gbfs_3h.hxx
+        at_rwbfs_dq.hxx
+        at_rwbfs_dq_mh.hxx
+        at_wbfs.hxx
+        at_wbfs_dq.hxx
+        at_wbfs_dq_mh.hxx
+        brfs.hxx
+        das.hxx
+        dfs_plus.hxx
+        ff_ehc.hxx
+        ff_gbfs.hxx
+        iw.hxx
+        rp_iw.hxx
+        serialized_search.hxx
+        siw.hxx
+        siw_plus.hxx
+        approx_novelty_bfws_2h_consistency_M.hxx
+        approx_novelty_bfws_2h_consistency.hxx
+        approx_novelty_bfws_2h_M.hxx
+        approx_novelty_bfws_2h.hxx
+        approx_novelty_bfws_4h.hxx
+        approx_novelty_rp_iw.hxx
+        approx_novelty_serialized_search.hxx
+        approx_novelty_siw_plus.hxx
+        approx_novelty_siw.hxx
+        approx_novelty_dfs_plus.hxx
+        approx_novelty_iw.hxx
+)
+
+target_include_directories(core
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+)
+
+install(
+    FILES
+        ${PROJECT_SOURCE_DIR}/src/engine/at_bfs.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/at_bfs_dq.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/at_bfs_dq_mh.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/at_gbfs.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/at_gbfs_3h.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/at_rwbfs_dq.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/at_rwbfs_dq_mh.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/at_wbfs.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/at_wbfs_dq.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/at_wbfs_dq_mh.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/brfs.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/bfws_2h.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/bfws_4h.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/bfws_2h_M.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/bfws_2h_consistency.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/bfws_2h_consistency_M.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/ipc2014_rwa.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/das.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/dfs_plus.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/ff_ehc.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/ff_gbfs.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/iw.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/rp_iw.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/serialized_search.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/siw.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/siw_plus.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/approx_novelty_bfws_2h_consistency_M.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/approx_novelty_bfws_2h_consistency.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/approx_novelty_bfws_2h_M.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/approx_novelty_bfws_2h.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/approx_novelty_bfws_4h.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/approx_novelty_rp_iw.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/approx_novelty_serialized_search.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/approx_novelty_siw_plus.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/approx_novelty_siw.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/approx_novelty_dfs_plus.hxx
+        ${PROJECT_SOURCE_DIR}/src/engine/approx_novelty_iw.hxx
+    DESTINATION
+        ${CMAKE_INSTALL_PREFIX}/lapkt/core/include/engine
+    COMPONENT
+        lapkt 
+)
