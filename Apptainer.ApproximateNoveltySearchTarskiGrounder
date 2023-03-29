@@ -49,8 +49,8 @@ Stage: run
 
 ## Define meta data
 %labels
-Name        Approximate Novelty Search
-Description Approximate Best First Width Search with novelty approximation and goal count heuristics, f=<#w,#g>
+Name        Approximate Novelty Search - Tarski Grounding
+Description Approximate Best First Width Search with novelty approximation and goal count heuristics, f=<#w,#g>, the planner leverages Tarski to ground the schematic representation of the planning problem, refer https://tarski.readthedocs.io/en/latest/notebooks/grounding-reachability-analysis.html
 Authors     Anubhav Singh <anubhavs@student.unimelb.edu.au>, Nir Lipovetzky <nir.lipovetzky@unimelb.edu.au>, Miquel Ramirez <miquel.ramirez@unimelb.edu.au>, Javier Segovia-Aguas <javier.segovia@upf.edu>
 License     MIT
 Tracks      Agile, Satisficing

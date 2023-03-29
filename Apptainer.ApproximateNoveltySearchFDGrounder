@@ -48,8 +48,8 @@ Stage: run
 
 ## Define meta data
 %labels
-Name        Approximate Novelty Search
-Description Approximate Best First Width Search with novelty approximation and goal count heuristics, f=<#w,#g>
+Name        Approximate Novelty Search - FD grounding
+Description Approximate Best First Width Search with novelty approximation and goal count heuristics, f=<#w,#g>, leverages Fast Downward to ground the schematic representation of the planning problem
 Authors     Anubhav Singh <anubhavs@student.unimelb.edu.au>, Nir Lipovetzky <nir.lipovetzky@unimelb.edu.au>, Miquel Ramirez <miquel.ramirez@unimelb.edu.au>, Javier Segovia-Aguas <javier.segovia@upf.edu>
 License     MIT
 Tracks      Agile, Satisficing
