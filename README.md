@@ -9,7 +9,8 @@ LAPKT aims to make your life easier if your purpose is to create, use or extend 
 
 Approximate Novelty Search in which we iteratively run approximate BFWS(f5) with novelty based pruning, sequentially increase the number of novelty categories W at each iteration.
 
-	Singh, Anubhav, Nir Lipovetzky, Miquel Ramirez, and Javier Segovia-Aguas. "Approximate novelty search." ICAPS, vol. 31, pp. 349-357. 2021.
+	Singh, Anubhav, Nir Lipovetzky, Miquel Ramirez, and Javier Segovia-Aguas. 
+	"Approximate novelty search." ICAPS, vol. 31, pp. 349-357. 2021.
 
 
 Approximate Novelty Search uses Fast-Downward for grounding of first-order representations
