@@ -1,4 +1,4 @@
-[![BuildTest](https://github.com/anubhav-cs/lapkt-ipc-2023/actions/workflows/build_test.yml/badge.svg)](https://github.com/anubhav-cs/lapkt-ipc-2023/actions/workflows/build_test.yml)
+[![BuildTest](https://github.com/ipc2023-classical/planner29/actions/workflows/build_test.yml/badge.svg)](https://github.com/ipc2023-classical/planner29/actions/workflows/build_test.yml)
 
 
 ![LAPKT](cmake/docs/resources/logo/lapkt-low-resolution-logo-color-on-transparent-background.png)
@@ -19,7 +19,7 @@ LAPKT aims to make your life easier if your purpose is to create, use or extend 
 The python script can be found [here](https://github.com/LAPKT-dev/LAPKT-public/blob/Devel2.0/src/python/_package/script/lapkt_cmd.py)
 ### *Note* - as of Oct 2022 `pypi` package for `macos` is `work in progress` 
 
-## Important platform requirements:  
+## Important platform requirements:
 
 **Platform agnostic**
 
