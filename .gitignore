@@ -15,7 +15,7 @@ tmp/
 log
 plan.ipc
 execution.details
-docs/
+/docs
 
 # Local directories 
 external_package/libff
