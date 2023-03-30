@@ -6,7 +6,7 @@ The `cmake` build also restructures the compiled binary the a package that can b
 
 The cmake script has been tested on standard [os images](https://github.com/actions/runner-images) available on Github Actions. The [build-test](../.github/workflows/build_test.yml) workflow configuration lists all the build and test commands.
 
-(user) can also use the [Apptainer configuration](../Apptainer.ApproximateNoveltySearchTarskiGrounder) to build a self contained package
+(user) can also use the [Apptainer configuration](../Apptainer.ApxNoveltyTarski) to build a self contained package
 
 ## Build prerequisites
 

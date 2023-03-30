@@ -15,13 +15,13 @@ Approximate Novelty Search in which we iteratively run approximate BFWS(f5) with
 
 Approximate Novelty Search uses Fast-Downward for grounding of first-order representations
 
-[Apptainer configuration](Apptainer.ApproximateNoveltySearchFDGrounder)
+[Apptainer configuration](Apptainer.ApxNoveltyFD)
 
 	apptainer build FD_ApproximateNoveltySearch.sif  Apptainer.ApproximateNoveltySearchFDGrounder
 	
 Approximate Novelty Search with Tarski leverages [Tarski](https://tarski.readthedocs.io/en/latest/notebooks/grounding-reachability-analysis.html) to ground the schematic representation of the planning problem
 
-[Apptainer configuration](Apptainer.ApproximateNoveltySearchTarskiGrounder)
+[Apptainer configuration](Apptainer.ApxNoveltyTarski)
 
 	apptainer build Tarski_ApproximateNoveltySearch.sif  Apptainer.ApproximateNoveltySearchTarskiGrounder
 
