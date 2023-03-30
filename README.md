@@ -17,13 +17,13 @@ Approximate Novelty Search uses Fast-Downward for grounding of first-order repre
 
 [Apptainer configuration](Apptainer.ApxNoveltyFD)
 
-	apptainer build FD_ApproximateNoveltySearch.sif  Apptainer.ApproximateNoveltySearchFDGrounder
+	apptainer build ApxNoveltyFD.sif  Apptainer.ApxNoveltyFD
 	
 Approximate Novelty Search with Tarski leverages [Tarski](https://tarski.readthedocs.io/en/latest/notebooks/grounding-reachability-analysis.html) to ground the schematic representation of the planning problem
 
 [Apptainer configuration](Apptainer.ApxNoveltyTarski)
 
-	apptainer build Tarski_ApproximateNoveltySearch.sif  Apptainer.ApproximateNoveltySearchTarskiGrounder
+	apptainer build ApxNoveltyTarski.sif  Apptainer.ApxNoveltyTarski
 
 
 
