@@ -11,14 +11,14 @@
         // "-DCMAKE_GENERATOR='Unix Makefiles'", // Default
         // "-DCMAKE_GENERATOR='MinGW Makefiles'", // Windows
         "-DUSE_SUPERBUILD=ON",  // Default: ON
-        "-DCMAKE_FF_CXX=ON",  // Default: OFF
-        "-DCMAKE_LEGACY_PLANNER=ON",  // Default: OFF
+        "-DCMAKE_FF_CXX=OFF",  // Default: OFF
+        "-DCMAKE_LEGACY_PLANNER=OFF",  // Default: OFF
         "-DCMAKE_FD=ON",  // Default: ON
         "-DCMAKE_TARSKI=ON",  // Default: ON
         "-DGEN_DOXYGEN_DOCS=OFF",  // Default: OFF
         "-DGEN_DOXYSPHINX_DOCS=OFF",  // Default: OFF
         "-DCMAKE_STATIC_BOOST=ON",  // Default: ON
-        "-DCMAKE_TESTING_ENABLED=ON",  // Default: OFF
+        "-DCMAKE_TESTING_ENABLED=OFF",  // Default: OFF
         // By default cmake would link to the latest version of the python library
         // "-DPY_VERSION=3.9" // Configure the build for a specific version
     ],
