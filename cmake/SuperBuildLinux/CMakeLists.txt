@@ -42,18 +42,6 @@ if(GEN_SPHINX_DOCS)
 endif(GEN_SPHINX_DOCS)
 message(STATUS "Status- Install auto docs pip dependencies: ${out}")
 
-#Fetch path to Pybind11
-execute_process(COMMAND ${Python_EXECUTABLE} -m pybind11 --cmakedir 
-  OUTPUT_VARIABLE PYBIND11_CMAKE_DIR
-  ERROR_VARIABLE PYBIND11_CMAKE_DIR_ERROR
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-  ERROR_STRIP_TRAILING_WHITESPACE
-)
-
-if(PYBIND11_CMAKE_DIR_ERROR)
-  message(FATAL_ERROR "Failed to find pybind11 cmake directory from pip\n ERROR: ${PYBIND11_CMAKE_DIR_ERROR}")
-endif()
-
 
 #XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX#
 #xxxx SECTION 2 - ADD EXTERNAL PROJECTS
@@ -75,6 +63,7 @@ if(GEN_DOXYGEN_DOCS OR GEN_DOXYSPHINX_DOCS)
     ExternalProject_Add( external_doxygen
       URL https://sourceforge.net/projects/doxygen/files/rel-1.9.6/doxygen-1.9.6.linux.bin.tar.gz
       URL_MD5 b6193a16bc5128597f5affd878dbd7b7
+      DOWNLOAD_EXTRACT_TIMESTAMP TRUE
       DOWNLOAD_DIR ${DEPS_DOWNLOAD_DIR}
       SOURCE_DIR  ${DEPS_INSTALL_PREFIX}/doxygen
       BUILD_IN_SOURCE 1
@@ -89,6 +78,7 @@ if(GEN_DOXYGEN_DOCS OR GEN_DOXYSPHINX_DOCS)
     ExternalProject_Add( external_doxygen
       URL https://www.doxygen.nl/files/doxygen-1.9.6.windows.x64.bin.zip
       URL_MD5 bdf1af97a733edd0a60fce2cf375c5c3
+      DOWNLOAD_EXTRACT_TIMESTAMP TRUE
       DOWNLOAD_DIR ${DEPS_DOWNLOAD_DIR}
       SOURCE_DIR  ${DEPS_INSTALL_PREFIX}/doxygen
       BUILD_IN_SOURCE 1
@@ -119,6 +109,7 @@ if(CMAKE_FF_CXX)
   )
   ExternalProject_Add(external_ff
     GIT_REPOSITORY https://github.com/LAPKT-dev/libff_parser
+    DOWNLOAD_EXTRACT_TIMESTAMP TRUE
     SOURCE_DIR ${DEPS_DOWNLOAD_DIR}/libff
     #SOURCE_SUBDIR src
     BINARY_DIR ${DEPS_BUILD_DIR}/ff/build
@@ -133,26 +124,30 @@ if(CMAKE_FF_CXX)
 endif()
 
 # BUILD CATCH2
-list(APPEND DEPENDENCIES
-  external_catch2
-)
-ExternalProject_Add(external_catch2
-  GIT_REPOSITORY https://github.com/catchorg/Catch2
-  GIT_TAG  v3.0.0-preview4
-  SOURCE_DIR ${DEPS_DOWNLOAD_DIR}/Catch2
-  #SOURCE_SUBDIR src
-  BINARY_DIR ${DEPS_BUILD_DIR}/Catch2/build
-  INSTALL_DIR ${DEPS_INSTALL_PREFIX}/Catch2
-  #GIT_REMOTE_UPDATE_STRATEGY    CHECKOUT
-  CMAKE_ARGS 
-    -DCMAKE_INSTALL_PREFIX=${DEPS_INSTALL_PREFIX}/Catch2
-    -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
-    -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
-  # INSTALL_COMMAND  cmake --install ${PROJECT_BINARY_DIR}/../build_external/Catch2/build
-)
-list (APPEND EXTRA_CMAKE_ARGS
-  -DCATCH2_ROOT=${DEPS_INSTALL_PREFIX}/Catch2
-)
+
+if(CMAKE_TESTING_ENABLED)
+  list(APPEND DEPENDENCIES
+    external_catch2
+  )
+  ExternalProject_Add(external_catch2
+    # GIT_REPOSITORY https://github.com/catchorg/Catch2
+    # GIT_TAG  v3.0.0-preview4
+    URL ${PROJECT_SOURCE_DIR}/external_package/Catch2-3.0.0-preview4.tar.gz
+    DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+    SOURCE_DIR ${DEPS_DOWNLOAD_DIR}/Catch2
+    #SOURCE_SUBDIR src
+    BINARY_DIR ${DEPS_BUILD_DIR}/Catch2/build
+    INSTALL_DIR ${DEPS_INSTALL_PREFIX}/Catch2
+    #GIT_REMOTE_UPDATE_STRATEGY    CHECKOUT
+    CMAKE_ARGS 
+      -DCMAKE_INSTALL_PREFIX=${DEPS_INSTALL_PREFIX}/Catch2
+      -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+    # INSTALL_COMMAND  cmake --install ${PROJECT_BINARY_DIR}/../build_external/Catch2/build
+  )
+  list (APPEND EXTRA_CMAKE_ARGS
+    -DCatch2_ROOT=${DEPS_INSTALL_PREFIX}/Catch2
+  )
+endif(CMAKE_TESTING_ENABLED)
 
 # BUILD BOOST
 
@@ -214,8 +209,9 @@ list(APPEND BUILD_COMMAND
 )
 
 ExternalProject_Add( external_boost
-  URL https://boostorg.jfrog.io/artifactory/main/release/1.78.0/source/boost_1_78_0.tar.bz2
-  URL_MD5 db0112a3a37a3742326471d20f1a186a
+  URL ${PROJECT_SOURCE_DIR}/external_package/boost-1.81.0.tar.xz
+  DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+  URL_MD5 6cf0cdd797bca685910d527ae3c08cb3
   DOWNLOAD_DIR ${DEPS_DOWNLOAD_DIR}
   TMP_DIR     ${DEPS_BUILD_DIR}/boost/tmp
   SOURCE_DIR  ${DEPS_BUILD_DIR}/boost/src
@@ -230,7 +226,7 @@ ExternalProject_Add( external_boost
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${DEPS_INSTALL_PREFIX}/boost/lib/cmake/Boost-1.78.0")
 
 list (APPEND EXTRA_CMAKE_ARGS
-  -DBOOST_ROOT=${DEPS_INSTALL_PREFIX}/boost
+  -DBoost_ROOT=${DEPS_INSTALL_PREFIX}/boost
   -DBOOST_INCLUDEDIR=${BOOST_ROOT}/include
   -DBOOST_LIBRARYDIR=${BOOST_ROOT}/lib
   # -DBoost_NO_SYSTEM_PATHS=ON
@@ -245,7 +241,6 @@ list (APPEND EXTRA_CMAKE_ARGS
 list(APPEND EXTRA_CMAKE_ARGS
   -DUSE_SUPERBUILD=OFF
   -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
-  -DPYBIND11_CMAKE_DIR=${PYBIND11_CMAKE_DIR}
 )
 
 get_cmake_property(vars CACHE_VARIABLES)
@@ -258,6 +253,7 @@ foreach(var ${vars})
 endforeach()
 
 ExternalProject_Add (external_lapkt
+  DOWNLOAD_EXTRACT_TIMESTAMP TRUE
   DEPENDS ${DEPENDENCIES}
   SOURCE_DIR ${PROJECT_SOURCE_DIR}
   CMAKE_ARGS ${EXTRA_CMAKE_ARGS}

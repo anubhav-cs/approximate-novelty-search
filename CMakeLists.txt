@@ -178,14 +178,29 @@ message("The PYTHON_VERSION is ${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}")
 # and modern targets and tools. If you use FindPython, pybind11 will detect this 
 # and use the existing targets instead:
 
+#Fetch path to Pybind11
+execute_process(COMMAND ${Python_EXECUTABLE} -m pybind11 --cmakedir 
+  OUTPUT_VARIABLE PYBIND11_CMAKE_DIR
+  ERROR_VARIABLE PYBIND11_CMAKE_DIR_ERROR
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+  ERROR_STRIP_TRAILING_WHITESPACE
+)
+
+if(PYBIND11_CMAKE_DIR_ERROR)
+  message(FATAL_ERROR "Failed to find pybind11 cmake directory from pip\n ERROR: ${PYBIND11_CMAKE_DIR_ERROR}")
+endif()
+
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${PYBIND11_CMAKE_DIR})
-set(pybind11_DIR ${PYBIND11_CMAKE_DIR})
-# set(pybind11_DIR "/home/zura/.local/lib/python3.9/site_packages/pybind11/share/cmake/pybind11")
 message(STATUS "PYBIND11 CMAKE_DIR PATH IS: ${PYBIND11_CMAKE_DIR}")
 message(STATUS "CMAKE_MODULE_PATH IS: ${CMAKE_MODULE_PATH}")
 
+set(pybind11_ROOT ${PYBIND11_CMAKE_DIR})
 # set(PYBIND11_NOPYTHON ON)
-find_package(pybind11 REQUIRED)
+find_package(pybind11 REQUIRED
+  # As of cmake-v3.12 <PackageName>_ROOT is the first path that is checked
+  # PATHS ${PYBIND11_CMAKE_DIR} 
+  # NO_DEFAULT_PATH
+)
 
 #---- Boost ----#
 # LOGS
@@ -214,11 +229,24 @@ list(APPEND Boost_Required_Components
   program_options
   random
 )
-find_package(Boost REQUIRED COMPONENTS ${Boost_Required_Components})
+find_package(Boost 
+  REQUIRED COMPONENTS ${Boost_Required_Components} 
+  # As of cmake-v3.12 <PackageName>_ROOT is the first path that is checked
+  # PATHS ${Boost_ROOT} 
+  # NO_DEFAULT_PATH
+  )
 message("THE BOOST INCLUDE dirs search path is " ${Boost_INCLUDE_DIRS} )
 
 #---- Catch2 ----#
-find_package(Catch2 3 REQUIRED PATHS ${CATCH2_ROOT} NO_DEFAULT_PATH)
+
+if(CMAKE_TESTING_ENABLED)
+  find_package(Catch2 3 REQUIRED
+  # As of cmake-v3.12 <PackageName>_ROOT is the first path that is checked
+  # PATHS ${Catch2_ROOT} 
+  # NO_DEFAULT_PATH
+  )
+  enable_testing()
+endif()
 
 #[[ Alternative FetchContent method to add Catch2 targets to the build
 Include(FetchContent)
@@ -231,9 +259,6 @@ FetchContent_MakeAvailable(Catch2)
 list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
 ]]
 
-if(CMAKE_TESTING_ENABLED)
-  enable_testing()
-endif()
 #XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX#
 #------ SECTION 3.0  lapkt LIBRARIES and DOCS -------#
 #XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX#

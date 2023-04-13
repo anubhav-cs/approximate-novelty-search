@@ -39,7 +39,6 @@ if(GEN_DOXYGEN_DOCS AND Doxygen_FOUND AND LINUX_BUILD)
     DOXYGEN_EXCLUDE=${PROJECT_SOURCE_DIR}/developersguide/debug_snippet.py
     DOXYGEN_GENERATE_LATEX=NO
     DOXYGEN_GENERATE_XML=NO
-    DOXYGEN_THEME_CSS=doxygen_default_design/custom.css
     DOXYGEN_LAPKT_LOGO=resources/logo/logo-no-background.png
     DOXYGEN_QUIET=YES
     ${DOXYGEN_EXEC} ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile
@@ -61,7 +60,7 @@ if(GEN_DOXYSPHINX_DOCS AND Doxygen_FOUND AND LINUX_BUILD)
   set(DOXYSPHINX_SOURCE ${PROJECT_SOURCE_DIR})
 
   # output directory for doxysphinx
-  set(OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/docs/doxysphinx)
+  set(OUTPUT_DIRECTORY ${DOXYSPHINX_SOURCE}/docs/doxysphinx)
 
   # Create necessary directories
   add_custom_target(make_doxysphinx_output_directory ALL
@@ -77,7 +76,7 @@ if(GEN_DOXYSPHINX_DOCS AND Doxygen_FOUND AND LINUX_BUILD)
   COMMAND
     ${DOXYGEN_EXEC} ${DOXYFILE_PATH}
     DEPENDS make_doxysphinx_output_directory
-    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+    WORKING_DIRECTORY ${DOXYSPHINX_SOURCE}
     COMMENT "Generating documentation with ${DOXYGEN_EXEC}"
   )
 
@@ -88,11 +87,11 @@ if(GEN_DOXYSPHINX_DOCS AND Doxygen_FOUND AND LINUX_BUILD)
   add_custom_target(doxysphinx ALL
     COMMAND 
     ${DOXYSPHINX_EXEC} build
-    ${PROJECT_SOURCE_DIR} ${HTML_DIRECTORY} 
+    ${DOXYSPHINX_SOURCE} ${HTML_DIRECTORY} 
     ${DOXYFILE_PATH}
     --doxygen_exe ${DOXYGEN_EXEC}
-    --doxygen_cwd ${PROJECT_SOURCE_DIR}
-    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+    --doxygen_cwd ${DOXYSPHINX_SOURCE}
+    WORKING_DIRECTORY ${DOXYSPHINX_SOURCE}
     DEPENDS doxygen_for_doxysphinx 
     COMMENT "Doxysphinx::Updating doxygen documentation"
   )
@@ -106,8 +105,8 @@ if(GEN_DOXYSPHINX_DOCS AND Doxygen_FOUND AND LINUX_BUILD)
     COMMAND 
     DOXYGEN_OUTPUT_DIRECTORY=${HTML_DIRECTORY}
     ${SPHINX_EXEC} -b html
-    ${PROJECT_SOURCE_DIR} ${HTML_DIRECTORY}
-    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+    ${DOXYSPHINX_SOURCE} ${HTML_DIRECTORY}
+    WORKING_DIRECTORY ${DOXYSPHINX_SOURCE}
     DEPENDS doxysphinx
     COMMENT "Sphinx::Generating rtd documentation"
   )

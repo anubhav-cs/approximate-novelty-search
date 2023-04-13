@@ -12,9 +12,7 @@
             "type": "python",
             "request": "launch",
             // "stopOnEntry": true,
-            // "python": "/usr/bin/python3",
             "program": "${workspaceFolder}/lapkt_package/lapkt.py",
-            // "program": "c:\\users\\zura\\appdata\\local\\programs\\python\\python310\\lib\\site-packages\\lapkt\\lapkt_run.py",
             "args": [
                 "Approximate_BFWS",
                 // "Approximate_IW",
@@ -38,17 +36,9 @@
                 // "--grounder", "FD",
                 // "--grounder", "FF",
                 "-d", 
-                // "${workspaceFolder}/test/classical_instance_small/visitall-opt11-strips/domain.pddl", 
-                "${workspaceFolder}/test/classical_instance_big/agricola-sat18/domain.pddl", 
-                // "${workspaceFolder}/test/classical_instance_small/cavediving/domain.pddl", 
-                // "${workspaceFolder}/test/classical_instance_small/gripper/domain.pddl", 
-                // "${workspaceFolder}/test/classical_instance_small/hiking-opt14-strips/domain.pddl", 
+                "${workspaceFolder}/test/classical_instance_small/visitall-opt11-strips/domain.pddl", 
                 "-p", 
-                // "${workspaceFolder}/test/classical_instance_small/visitall-opt11-strips/problem02-full.pddl", 
-                "${workspaceFolder}/test/classical_instance_big/agricola-sat18/p11.pddl", 
-                // "${workspaceFolder}/test/classical_instance_small/cavediving/testing01.pddl", 
-                // "${workspaceFolder}/test/classical_instance_small/gripper/prob01.pddl", 
-                // "${workspaceFolder}/test/classical_instance_small/hiking-opt14-strips/ptesting-1-2-3.pddl", 
+                "${workspaceFolder}/test/classical_instance_small/visitall-opt11-strips/problem02-full.pddl", 
                 "--wait_debug"
             ],
             "cwd": "${workspaceFolder}",
@@ -111,16 +101,9 @@
                 // "--grounder", "FD",
                 // "--grounder", "FF",
                 "-d", 
-                // "${workspaceFolder}/test/classical_instance_small/visitall-opt11-strips/domain.pddl", 
-                // "${workspaceFolder}/test/classical_instance_small/cavediving/domain.pddl", 
                 "${workspaceFolder}/test/classical_instance_small/gripper/domain.pddl", 
-                // "${workspaceFolder}/test/classical_instance_small/hiking-opt14-strips/domain.pddl", 
                 "-p", 
-                // "${workspaceFolder}/test/classical_instance_small/visitall-opt11-strips/problem02-full.pddl", 
-                // "${workspaceFolder}/test/classical_instance_small/cavediving/testing01.pddl", 
                 "${workspaceFolder}/test/classical_instance_small/gripper/prob01.pddl", 
-                // "${workspaceFolder}/test/classical_instance_small/hiking-opt14-strips/ptesting-1-2-3.pddl", 
-                // "--wait_debug"
             ],
             "stopAtEntry": false,
             "setupCommands": [
@@ -169,26 +152,12 @@
                 // "--grounder", "FD",
                 // "--grounder", "FF",
                 "-d", 
-                // "${workspaceFolder}/test/classical_instance_small/visitall-opt11-strips/domain.pddl", 
-                // "${workspaceFolder}/test/classical_instance_small/cavediving/domain.pddl", 
                 "${workspaceFolder}/test/classical_instance_small/gripper/domain.pddl", 
-                // "${workspaceFolder}/test/classical_instance_small/hiking-opt14-strips/domain.pddl", 
                 "-p", 
-                // "${workspaceFolder}/test/classical_instance_small/visitall-opt11-strips/problem02-full.pddl", 
-                // "${workspaceFolder}/test/classical_instance_small/cavediving/testing01.pddl", 
                 "${workspaceFolder}/test/classical_instance_small/gripper/prob01.pddl", 
-                // "${workspaceFolder}/test/classical_instance_small/hiking-opt14-strips/ptesting-1-2-3.pddl", 
                 // "--wait_debug"
             ],
             // "stopAtEntry": false,
-            // "MIMode": "lldb",
-            // "setupCommands": [
-            //     {
-            //         "description": "Enable pretty-printing for gdb",
-            //         "text": "-enable-pretty-printing",
-            //         "ignoreFailures": true
-            //     }
-            // ],
             "cwd": "${workspaceFolder}",
         },
         
