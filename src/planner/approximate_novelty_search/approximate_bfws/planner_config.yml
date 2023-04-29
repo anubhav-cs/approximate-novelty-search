@@ -169,6 +169,13 @@ Approximate_BFWS:
       action  : 'store_true'
       help    : 'verbose output, default set to OFF'
     var_name: 'verbose'
+  actual_action_costs_in_output:
+    cmd_arg:
+      default : True
+      required: False
+      action  : 'store_false'
+      help    : 'ignores action cost in plan output, default set to True'
+    var_name: 'ignore_action_costs'
   run_id:
     cmd_arg:
       default : 0

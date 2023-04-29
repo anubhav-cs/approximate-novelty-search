@@ -15,18 +15,19 @@ Approximate Novelty Search in which we iteratively run approximate BFWS(f5) with
 
 Approximate Novelty Search uses Fast-Downward for grounding of first-order representations
 
-[Apptainer configuration](Apptainer.ApxNoveltyFD)
+[Agile 1 Apptainer configuration](Apptainer.ApxNovelty)
 
-	apptainer build ApxNoveltyFD.sif  Apptainer.ApxNoveltyFD
+	apptainer build ApxNovelty.sif  Apptainer.ApxNovelty
 	
-Approximate Novelty Search with Tarski leverages [Tarski](https://tarski.readthedocs.io/en/latest/notebooks/grounding-reachability-analysis.html) to ground the schematic representation of the planning problem
+Grounding Schematic Representation with GRINGO for Width-based Search leverages [Tarski](https://tarski.readthedocs.io/en/latest/notebooks/grounding-reachability-analysis.html)
 
-[Apptainer configuration](Apptainer.ApxNoveltyTarski)
+[Agile 2 Apptainer configuration](Apptainer.ApxNoveltyTarski)
 
 	apptainer build ApxNoveltyTarski.sif  Apptainer.ApxNoveltyTarski
 
+[Satisficing Apptainer configuration](Apptainer.ApxNoveltyAnytime)
 
-
+	apptainer build ApxNoveltyAnytime.sif  Apptainer.ApxNoveltyAnytime
 
 
 AUTHORS

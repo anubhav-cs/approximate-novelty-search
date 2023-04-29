@@ -67,6 +67,10 @@ def process_arguments(debug: bool = False) -> dict:
             help='If specified, plan is checked for correctioness' +
             'using validate')
         parser.add_argument(
+            '--anytime_fd', action='store',
+            nargs='?', required=False, 
+            help='Specify the path to FD and along with the alias')
+        parser.add_argument(
             '--grounder', action='store',
             nargs='?', default='Tarski',
             help='Choice of parser - Tarski<Default>,FD or FF')
