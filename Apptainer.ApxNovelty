@@ -35,7 +35,6 @@ Stage: run
     ## Remove unnecessary files to keep the image small.
     rm -rf /var/lib/apt/lists/*
     python3 -m pip install ruamel.yaml
-    chmod -R 755 /builds/Release/lapkt_package/ 
 
 # The runscript is called whenever the container is used to solve an instance.
 %runscript
