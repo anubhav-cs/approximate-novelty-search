@@ -199,11 +199,11 @@ protected:
 
   template <typename Search_Engine>
   float do_search(Search_Engine &engine, aptk::STRIPS_Problem &plan_prob,
-          std::ofstream &plan_stream, bool print_notfound = true);
+  bool print_notfound = true);
 
   template <typename Search_Engine>
   float do_search_iterative(Search_Engine &engine, aptk::STRIPS_Problem &plan_prob,
-                std::ofstream &plan_stream, bool has_arity_2 = true, float prev_time_taken = 0.0);
+                bool has_arity_2 = true, float prev_time_taken = 0.0);
 
   float do_anytime(Anytime_RWA &engine);
 };
