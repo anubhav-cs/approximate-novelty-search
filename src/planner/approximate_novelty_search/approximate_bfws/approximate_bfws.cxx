@@ -62,8 +62,8 @@ void Approximate_BFWS::bfws_options(Fwd_Search_Problem &search_prob, Search_Engi
 
 //---------------------------------------------------------------------------//
 template <typename Search_Engine>
-float Approximate_BFWS::do_search(Search_Engine &engine, aptk::STRIPS_Problem &plan_prob,
-                  std::ofstream &plan_stream, bool print_notfound)
+float Approximate_BFWS::do_search(Search_Engine &engine, 
+  aptk::STRIPS_Problem &plan_prob, bool print_notfound)
 {
 
   std::ofstream details("execution.details");
@@ -83,6 +83,8 @@ float Approximate_BFWS::do_search(Search_Engine &engine, aptk::STRIPS_Problem &p
 
   if (m_found_plan)
   {
+    std::ofstream plan_stream;
+    plan_stream.open(m_plan_filename);
     details << "Plan found with cost: " << m_cost << std::endl;
     for (unsigned k = 0; k < plan.size(); k++)
     {
@@ -137,6 +139,7 @@ float Approximate_BFWS::do_search(Search_Engine &engine, aptk::STRIPS_Problem &p
     aptk::report_memory_usage();
 #endif
     details.close();
+    plan_stream.close();
     return total_time;
   }
   else
@@ -194,10 +197,9 @@ float Approximate_BFWS::do_search(Search_Engine &engine, aptk::STRIPS_Problem &p
 
 //---------------------------------------------------------------------------//
 template <typename Search_Engine>
-float Approximate_BFWS::do_search_iterative(Search_Engine &engine, aptk::STRIPS_Problem &plan_prob,
-                      std::ofstream &plan_stream, bool has_arity_2, float prev_time_taken)
+float Approximate_BFWS::do_search_iterative(Search_Engine &engine,
+  aptk::STRIPS_Problem &plan_prob, bool has_arity_2, float prev_time_taken)
 {
-
   std::ofstream details("execution.details");
   std::vector<aptk::Action_Idx> plan;
   m_cost = infty;
@@ -228,6 +230,8 @@ float Approximate_BFWS::do_search_iterative(Search_Engine &engine, aptk::STRIPS_
 
   if (m_found_plan)
   {
+    std::ofstream plan_stream;
+    plan_stream.open(m_plan_filename);
     details << "Plan found with cost: " << m_cost << std::endl;
     for (unsigned k = 0; k < plan.size(); k++)
     {
@@ -282,6 +286,7 @@ float Approximate_BFWS::do_search_iterative(Search_Engine &engine, aptk::STRIPS_
     aptk::report_memory_usage();
 #endif
     details.close();
+    plan_stream.close();
     return total_time;
   }
   else
@@ -410,9 +415,6 @@ void Approximate_BFWS::solve()
 
   Fwd_Search_Problem search_prob(prob);
 
-  std::ofstream plan_stream;
-  plan_stream.open(m_plan_filename);
-
   prob->compute_edeletes();
 
   Gen_Lms_Fwd gen_lms(search_prob);
@@ -458,11 +460,9 @@ void Approximate_BFWS::solve()
     bfws_options(search_prob, bfs_engine, 1, graph1);
     bfs_engine.set_use_novelty_pruning(true);
 
-    float bfs_t = do_search_iterative(bfs_engine, *prob, plan_stream, false);
+    float bfs_t = do_search_iterative(bfs_engine, *prob, false);
 
     std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
-
-    plan_stream.close();
 
     return;
   }
@@ -488,11 +488,9 @@ void Approximate_BFWS::solve()
     bfs_engine.set_use_random_pruning(true, m_alpha_rand_prune,
                       m_enable_hold_q, m_rand_prune_slack);
 
-    float bfs_t = do_search_iterative(bfs_engine, *prob, plan_stream, false);
+    float bfs_t = do_search_iterative(bfs_engine, *prob, false);
 
     std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
-
-    plan_stream.close();
 
     return;
   }
@@ -516,11 +514,9 @@ void Approximate_BFWS::solve()
     bfws_options(search_prob, bfs_engine, m_max_novelty, graph1);
     bfs_engine.set_use_novelty_pruning(true);
 
-    float bfs_t = do_search(bfs_engine, *prob, plan_stream);
+    float bfs_t = do_search(bfs_engine, *prob);
 
     std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
-
-    plan_stream.close();
 
     return;
   }
@@ -539,7 +535,7 @@ void Approximate_BFWS::solve()
     bfs_engine.set_use_rp(false);
     // bfs_engine.set_use_novelty_pruning( true );
 
-    float bfs_t = do_search(bfs_engine, *prob, plan_stream);
+    float bfs_t = do_search(bfs_engine, *prob);
 
     std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
   }
@@ -554,7 +550,7 @@ void Approximate_BFWS::solve()
 
     bfws_options(search_prob, bfs_engine, m_max_novelty, graph);
 
-    float bfs_t = do_search(bfs_engine, *prob, plan_stream);
+    float bfs_t = do_search(bfs_engine, *prob);
 
     std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
   }
@@ -571,7 +567,7 @@ void Approximate_BFWS::solve()
     bfs_engine.set_use_random_pruning(true, m_alpha_rand_prune,
                       m_enable_hold_q, m_rand_prune_slack);
 
-    float bfs_t = do_search(bfs_engine, *prob, plan_stream);
+    float bfs_t = do_search(bfs_engine, *prob);
 
     std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
   }
@@ -588,7 +584,7 @@ void Approximate_BFWS::solve()
 
     bfs_engine.set_use_rp_from_init_only(true);
 
-    float bfs_t = do_search(bfs_engine, *prob, plan_stream);
+    float bfs_t = do_search(bfs_engine, *prob);
 
     std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
   }
@@ -605,11 +601,9 @@ void Approximate_BFWS::solve()
 
     bfs_engine.set_use_novelty_pruning(true);
 
-    float bfs_t = do_search(bfs_engine, *prob, plan_stream);
+    float bfs_t = do_search(bfs_engine, *prob);
 
     std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
-
-    plan_stream.close();
 
     return;
   }
@@ -628,11 +622,9 @@ void Approximate_BFWS::solve()
     bfs_engine.set_use_random_pruning(true, m_alpha_rand_prune,
                       m_enable_hold_q, m_rand_prune_slack);
 
-    float bfs_t = do_search(bfs_engine, *prob, plan_stream);
+    float bfs_t = do_search(bfs_engine, *prob);
 
     std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
-
-    plan_stream.close();
 
     return;
   }
@@ -649,11 +641,9 @@ void Approximate_BFWS::solve()
 
     bfs_engine.set_use_novelty_pruning(true);
 
-    float bfs_t = do_search_iterative(bfs_engine, *prob, plan_stream, false);
+    float bfs_t = do_search_iterative(bfs_engine, *prob, false);
 
     std::cout << "k-BFWS iterative search completed in " << bfs_t << " secs" << std::endl;
-
-    plan_stream.close();
 
     return;
   }
@@ -672,11 +662,9 @@ void Approximate_BFWS::solve()
     bfs_engine.set_use_random_pruning(true, m_alpha_rand_prune,
                       m_enable_hold_q, m_rand_prune_slack);
 
-    float bfs_t = do_search_iterative(bfs_engine, *prob, plan_stream, false);
+    float bfs_t = do_search_iterative(bfs_engine, *prob, false);
 
     std::cout << "k-BFWS iterative search completed in " << bfs_t << " secs" << std::endl;
-
-    plan_stream.close();
 
     return;
   }
@@ -695,11 +683,9 @@ void Approximate_BFWS::solve()
 
     std::cout << "New M-Value: " << m_M << std::endl;
 
-    float bfs_t = do_search(bfs_engine, *prob, plan_stream);
+    float bfs_t = do_search(bfs_engine, *prob);
 
     std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
-
-    plan_stream.close();
 
     return;
   }
@@ -718,11 +704,9 @@ void Approximate_BFWS::solve()
 
     std::cout << "New M-Value: " << m_M << std::endl;
 
-    float bfs_t = do_search(bfs_engine, *prob, plan_stream);
+    float bfs_t = do_search(bfs_engine, *prob);
 
     std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
-
-    plan_stream.close();
 
     return;
   }
@@ -738,11 +722,9 @@ void Approximate_BFWS::solve()
 
     bfs_engine.set_use_novelty_pruning(true);
 
-    float bfs_t = do_search(bfs_engine, *prob, plan_stream);
+    float bfs_t = do_search(bfs_engine, *prob);
 
     std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
-
-    plan_stream.close();
 
     return;
   }
@@ -758,11 +740,9 @@ void Approximate_BFWS::solve()
 
     bfs_engine.set_use_novelty_pruning(true);
 
-    float bfs_t = do_search(bfs_engine, *prob, plan_stream);
+    float bfs_t = do_search(bfs_engine, *prob);
 
     std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
-
-    plan_stream.close();
 
     return;
   }
@@ -778,7 +758,7 @@ void Approximate_BFWS::solve()
 
     bfs_engine.set_use_novelty_pruning(true);
 
-    float bfs_t = do_search(bfs_engine, *prob, plan_stream);
+    float bfs_t = do_search(bfs_engine, *prob);
 
     std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
 
@@ -795,7 +775,7 @@ void Approximate_BFWS::solve()
       bfws_options(search_prob, bfs_engine, 1, graph);
       bfs_engine.set_use_novelty_pruning(true);
 
-      float bfs_t = do_search(bfs_engine, *prob, plan_stream, false);
+      float bfs_t = do_search(bfs_engine, *prob, false);
       if (m_found_plan)
       {
         std::cout << "Plan found in iteration: " << i + 1 << std::endl;
@@ -811,7 +791,7 @@ void Approximate_BFWS::solve()
       bfws_options(search_prob, bfs_engine, 1, graph);
       bfs_engine.set_use_novelty_pruning(true);
 
-      float bfs_t = do_search(bfs_engine, *prob, plan_stream, true);
+      float bfs_t = do_search(bfs_engine, *prob, true);
 
       std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
       if (m_found_plan)
@@ -834,7 +814,7 @@ void Approximate_BFWS::solve()
       bfs_engine.set_use_random_pruning(true, m_alpha_rand_prune,
                         m_enable_hold_q, m_rand_prune_slack);
 
-      float bfs_t = do_search(bfs_engine, *prob, plan_stream, false);
+      float bfs_t = do_search(bfs_engine, *prob, false);
       if (m_found_plan)
       {
         std::cout << "Plan found in iteration: " << i + 1 << std::endl;
@@ -851,7 +831,7 @@ void Approximate_BFWS::solve()
       bfs_engine.set_use_random_pruning(true, m_alpha_rand_prune,
                         m_enable_hold_q, m_rand_prune_slack);
 
-      float bfs_t = do_search(bfs_engine, *prob, plan_stream, true);
+      float bfs_t = do_search(bfs_engine, *prob, true);
 
       std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
       if (m_found_plan)
@@ -873,7 +853,7 @@ void Approximate_BFWS::solve()
 
     bfs_engine->set_use_novelty_pruning(true);
 
-    float bfs_t = do_search(*bfs_engine, *prob, plan_stream, false);
+    float bfs_t = do_search(*bfs_engine, *prob, false);
 
     std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
 
@@ -905,17 +885,15 @@ void Approximate_BFWS::solve()
         std::cout << "New M-Value: " << discrepancy << std::endl;
 
         if (discrepancy * 2 > m_M)
-          bfs_t = do_search(bfs_engine, *prob, plan_stream, true);
+          bfs_t = do_search(bfs_engine, *prob, true);
         else
-          bfs_t = do_search(bfs_engine, *prob, plan_stream, false);
+          bfs_t = do_search(bfs_engine, *prob, false);
 
         std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
         if (m_found_plan)
           break;
       }
     }
-
-    plan_stream.close();
 
     return;
   }
@@ -932,7 +910,7 @@ void Approximate_BFWS::solve()
 
     bfs_engine.set_use_novelty_pruning(true);
 
-    float bfs_t = do_search(bfs_engine, *prob, plan_stream, false);
+    float bfs_t = do_search(bfs_engine, *prob, false);
 
     std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
   }
@@ -949,7 +927,7 @@ void Approximate_BFWS::solve()
 
     bfs_engine.set_use_novelty_pruning(true);
 
-    float bfs_t = do_search(bfs_engine, *prob, plan_stream, false);
+    float bfs_t = do_search(bfs_engine, *prob, false);
 
     std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
 
@@ -982,7 +960,7 @@ void Approximate_BFWS::solve()
 
       m_found_plan = false;
       bfs_engine.set_use_novelty_pruning(true);
-      bfs_t = do_search_iterative(bfs_engine, *prob, plan_stream, true, bfs_t);
+      bfs_t = do_search_iterative(bfs_engine, *prob, true, bfs_t);
 
       std::cout << "DUAL BFWS search completed in " << bfs_t << " secs" << std::endl;
     }
@@ -1001,7 +979,7 @@ void Approximate_BFWS::solve()
 
     bfs_engine.set_use_novelty_pruning(true);
 
-    float bfs_t = do_search(bfs_engine, *prob, plan_stream, false);
+    float bfs_t = do_search(bfs_engine, *prob, false);
 
     std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
   }
@@ -1033,7 +1011,7 @@ void Approximate_BFWS::solve()
     bfs_engine.set_arity_2(m_max_novelty, 1);
 
     m_found_plan = false;
-    float bfs_t = do_search(bfs_engine, *prob, plan_stream);
+    float bfs_t = do_search(bfs_engine, *prob);
 
     std::cout << "BFS search completed in " << bfs_t << " secs" << std::endl;
   }
@@ -1050,7 +1028,7 @@ void Approximate_BFWS::solve()
 
     bfs_engine.set_use_novelty_pruning(true);
 
-    float bfs_t = do_search(bfs_engine, *prob, plan_stream, false);
+    float bfs_t = do_search(bfs_engine, *prob, false);
 
     std::cout << "Fast-BFS search completed in " << bfs_t << " secs" << std::endl;
   }
@@ -1084,12 +1062,10 @@ void Approximate_BFWS::solve()
                       m_enable_hold_q, m_rand_prune_slack);
 
     m_found_plan = false;
-    float bfs_t = do_search(bfs_engine, *prob, plan_stream);
+    float bfs_t = do_search(bfs_engine, *prob);
 
     std::cout << "BFS search completed in " << bfs_t << " secs" << std::endl;
   }
-
-  plan_stream.close();
 
   if (m_anytime and (m_cost < infty))
   {
