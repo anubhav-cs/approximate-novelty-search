@@ -34,7 +34,7 @@ Stage: run
     apt-get -y install python3-minimal python3-pip
     ## Remove unnecessary files to keep the image small.
     rm -rf /var/lib/apt/lists/*
-    python3 -m pip install tarski-lapkt[gringo] ruamel.yaml
+    python3 -m pip install tarski-lapkt[gringo, arithmetic] ruamel.yaml
 
 # The runscript is called whenever the container is used to solve an instance.
 %runscript
