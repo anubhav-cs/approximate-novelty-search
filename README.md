@@ -1,5 +1,4 @@
-[![BuildTest](https://github.com/ipc2023-classical/planner29/actions/workflows/build_test.yml/badge.svg)](https://github.com/ipc2023-classical/planner29/actions/workflows/build_test.yml)
-
+[![BuildTest](https://github.com/anubhav-cs/approximate-novelty-search/actions/workflows/build_test.yml/badge.svg)](https://github.com/anubhav-cs/approximate-novelty-search/actions/workflows/build_test.yml)
 
 ![LAPKT](cmake/docs/resources/logo/lapkt-low-resolution-logo-color-on-transparent-background.png)
 
