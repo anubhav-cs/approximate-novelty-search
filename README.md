@@ -37,7 +37,6 @@ AUTHORS
 - Miquel Ramirez <miquel.ramirez@gmail.com>
 - Nir Lipovetzky <nirlipo@gmail.com>
 - Javier Segovia-Aguas <javier.segovia@upf.edu>
-- Guillem Francès <guillem.frances@gmail.com>
 
 CONTENTS
 ========
